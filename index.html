@@ -1,0 +1,53 @@
+<html>
+<title>Javascript Learning</title>
+<script>
+	var firstMethod = function() {
+	  return new Promise(function(resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+		 console.log("first"+this.responseText);
+		  resolve(this.responseText);
+		};
+		xhr.onerror = reject;
+		xhr.open('GET', "https://restcountries.eu/rest/v2/all?k="+ new Date());
+		xhr.send();
+	  });
+	};
+ 
+ 
+	var secondMethod = function(someStuff) {
+	console.log("inside second"+someStuff);
+	  return new Promise(function(resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+			   console.log("second"+this.responseText);
+		  resolve(this.responseText);
+		};
+		xhr.onerror = reject;
+		xhr.open('GET', "https://restcountries.eu/rest/v2/all?k="+ new Date());
+		xhr.send();
+	  });
+	};
+ 
+	var thirdMethod = function(someStuff) {
+	   var promise = new Promise(function(resolve, reject){
+			 console.log('third method completed');
+			 resolve({result: someStuff.newData});
+	   });
+	   return promise;
+	};
+ 
+	firstMethod()
+   .then(function(response) {
+				console.log("response from first"+response);
+				return secondMethod(response);
+	}) .then(function(response) {
+				console.log("response from second"+response);
+				return thirdMethod(response);
+	});
+</script>
+<body>
+
+</body>
+
+</html>
