@@ -1,7 +1,111 @@
 <html>
 <title>Javascript Learning</title>
+ <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+	div{
+	border-radius:4px ;	
+	}
+	.div-code {
+		margin-right: 4.5rem;
+		margin-bottom:20px;
+		margin-top:20px;
+		border-radius:4px ;		padding:8px;
+	}
+	.div-response-1 {
+		margin-right: 4.5rem;
+		background-color: #daeeff;
+		margin-bottom:20px;
+	border-radius:4px ;	
+		margin-top:20px;	padding:8px;
+		max-height:400px;overflow:hidden;
+	}
+	.div-response-2{
+		margin-right: 4.5rem;
+		background-color: #957bbe;
+		margin-bottom:20px;
+	border-radius:4px ;	
+		padding:8px;
+		max-height:400px;
+		overflow:hidden;
+	}
+	.div-response-3 {
+		margin-right: 4.5rem;
+		background-color: #fae3c4;
+		margin-bottom:20px;
+		padding:4px;
+			max-height:400px;overflow:hidden;
+	}
+  </style>
 <script>
+	
 	var firstMethod = function() {
+	  return new Promise(function(resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+		 console.log("first"+this.responseText);
+		  resolve(this.responseText);
+		};
+		xhr.onerror = reject;
+		xhr.open('GET', "https://restcountries.eu/rest/v2/all?k="+ new Date());
+		xhr.send();
+	  });
+	};
+ 
+ 
+	var secondMethod = function(someStuff) {
+	console.log("inside second"+someStuff);
+	  return new Promise(function(resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+			   console.log("second"+this.responseText);
+		  resolve(this.responseText);
+		};
+		xhr.onerror = reject;
+		xhr.open('GET', "https://restcountries.eu/rest/v2/all?k="+ new Date());
+		xhr.send();
+	  });
+	};
+	var thirdMethod = function(someStuff) {
+	  return new Promise(function(resolve, reject) {
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function() {
+			   console.log("second"+this.responseText);
+		  resolve(this.responseText);
+		};
+		xhr.onerror = reject;
+		xhr.open('GET', "https://restcountries.eu/rest/v2/all?k="+ new Date());
+		xhr.send();
+	  });
+	};
+ 
+	/*var thirdMethod = function(someStuff) {
+	   var promise = new Promise(function(resolve, reject){
+			 console.log('third method completed');
+			 resolve({result: someStuff.newData});
+	   });
+	   return promise;
+	};
+	*/
+	firstMethod()
+   .then(function(response) {
+				console.log("response from first"+response);
+				$(".div-response-1").html(response);
+				return secondMethod(response);
+	}) .then(function(response) {
+				console.log("response from second"+response);
+					$(".div-response-2").html(response);
+					return thirdMethod(response);
+	}).then(function(response) {$(".div-response-3").html(response);}
+	);
+</script>
+<body>
+<div class="container">
+<div class="div-code"><pre><code>
+var firstMethod = function() {
 	  return new Promise(function(resolve, reject) {
 		var xhr = new XMLHttpRequest();
 		xhr.onload = function() {
@@ -40,14 +144,21 @@
 	firstMethod()
    .then(function(response) {
 				console.log("response from first"+response);
+				$(".div-response-1").html(response);
 				return secondMethod(response);
 	}) .then(function(response) {
 				console.log("response from second"+response);
+					$(".div-response-2").html(response);
 				return thirdMethod(response);
 	});
-</script>
-<body>
-
+</code></pre></div>
+<h3>Response 1</h3>
+<div class="div-response-1"></div>
+<h3>Response 2</h3>
+<div class="div-response-2"></div>
+<h3>Response 3</h3>
+<div class="div-response-3"></div>
+</div>
 </body>
 
 </html>
